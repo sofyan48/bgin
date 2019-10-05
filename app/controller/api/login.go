@@ -41,19 +41,28 @@ func (h LoginController) LoginUsers(c *gin.Context) {
 	type ResponseData struct {
 		Username string `json:"username"`
 		Token    string `json:"status"`
+		Expire   int    `json:expire`
 	}
 
 	c.Bind(&data)
 	err := models.GetByUsername(&logindata, data.Username)
+
 	if err != nil {
 		helper.ResponseMsg(c, 404, "Login Not Success")
 	} else {
-		token := StringWithCharset(10)
-		data, _ := json.Marshal(logindata)
-		redis.String(rd.Store.Do("SET", data, token))
-		var res ResponseData
-		res.Token = token
-		helper.ResponseSuccess(c, 200, res)
+		if logindata.Password == data.Password {
+			token := StringWithCharset(100)
+			data, _ := json.Marshal(logindata)
+			redis.String(rd.Store.Do("SET", data, token))
+			redis.String(rd.Store.Do("EXPIRE", token, 3600))
+			var response ResponseData
+			response.Token = token
+			response.Username = logindata.Username
+			response.Expire = 3600
+			helper.ResponseSuccess(c, 200, response)
+		} else {
+			helper.ResponseMsg(c, 404, "Username Or Password Wrong")
+		}
 	}
 	return
 }
