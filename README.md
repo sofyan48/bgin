@@ -1,28 +1,122 @@
-# GO GIN BOILERPLATE
-Boilerplate for Golang, Gin
+# BGIN
+Create Your Micro Service in Gin Golang
 
-## HOW TO USE
-
-Move project to $GOPATH/src
+## TREE
 ```
-mv boilerplate $GOPATH/src
+├── app
+│   ├── config
+│   │   └── config.go
+│   ├── controller
+│   │   ├── api
+│   │   │   ├── health.go
+│   │   │   ├── login.go
+│   │   │   └── ping.go
+│   │   └── routes.go
+│   ├── helper
+│   │   └── rest.go
+│   ├── libs
+│   │   └── utils.go
+│   ├── middlewares
+│   │   └── auth.go
+│   ├── models
+│   │   └── loginModels.go
+│   ├── moduls
+│   │   ├── migration
+│   │   │   └── scheme.go
+│   │   └── package
+│   │       ├── database.go
+│   │       └── redis.go
+│   └── server
+│       ├── router.go
+│       └── server.go
+├── test
+│    └── ping_test.go
+├── Dockerfile
+├── Gopkg.lock
+├── Gopkg.toml
+├── README.md
+├── docker-compose.yml
+├── go.mod
+├── go.sum
+├── main.go
 ```
 
-if you change folder name, Customize the import line with the name of your project folder
-
-
-Install Dep
+## HOW TO INSTALL 
 ```
-curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-```
-Mapping Package
-```
-dep ensure
+go get github.com/meongbego/bgin
 ```
 
-Set environment, move .env.example to .env
+Test in Running
 
-Run
 ```
 go run main.go
 ```
+
+Test Build 
+
+```
+go build main.go
+```
+
+To run production
+```
+go run main.go -e production or ./build -e production
+```
+
+## PACKAGE
+Activate and deactivate available packages see on app/moduls/package, see the example on main.go
+```
+main.go
+
+look at this line:
+
+db.Conn = db.Init()
+db.MigrateScheme(db.Conn)
+redis.Store = redis.Init()
+```
+
+
+## DATABASE SCHEME AN IMPORTED TABLE
+to create a database schema look at the app/moduls/migration/ folder then edit the schem.go file
+
+```
+app/moduls/migration/scheme.go
+
+look at this line:
+
+db.AutoMigrate (& LoginScheme {}, & Userdata {})
+```
+## CONTROLLER
+to create a controller schema look at the app/controller/api folder
+
+```
+app/controller/api
+```
+
+## ROUTES
+to create route in look at app/controller folder then edit routes.go
+```
+app/controller/routes.go
+
+look at this line:
+
+api := router.Group("api")
+{
+    ping := new(controller.PingController)
+    health := new(controller.HealthController)
+    login := new(controller.LoginController)
+    // create rest api models
+    api.GET("/ping", ping.Status)
+    api.GET("/health", health.Status)
+    api.POST("/login", login.LoginUsers)
+    api.GET("/login/list", login.ListLogin)
+}
+```
+
+## MODELS
+to create a models look at the app/models folder
+
+```
+app/models/
+```
+see loginModels.go for examples
