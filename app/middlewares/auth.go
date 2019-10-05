@@ -6,8 +6,8 @@ import (
 	"strings"
 	"net"
 	"github.com/gin-gonic/gin"
-	"bgin/app/helper"
-	"bgin/app/libs"
+	"github.com/meongbego/bgin/app/helper"
+	"github.com/meongbego/bgin/app/libs"
 )
 
 func ChekcIPRange(w_ip []string, addr string) bool {

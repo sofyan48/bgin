@@ -1,7 +1,7 @@
 package server
 
 import (
-	"bgin/app/middlewares"
+	"github.com/meongbego/bgin/app/middlewares"
 
 	"github.com/gin-gonic/gin"
 )

@@ -3,7 +3,7 @@ package moduls
 import (
 	"fmt"
 
-	"bgin/app/libs"
+	"github.com/meongbego/bgin/app/libs"
 
 	"github.com/garyburd/redigo/redis"
 )

@@ -1,10 +1,11 @@
 package server
 
 import (
-	controller "bgin/app/controller"
-	"bgin/app/libs"
 	"fmt"
 	"os"
+
+	controller "github.com/meongbego/bgin/app/controller"
+	"github.com/meongbego/bgin/app/libs"
 )
 
 func Init() {

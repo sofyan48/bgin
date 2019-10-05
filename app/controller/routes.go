@@ -1,7 +1,7 @@
 package controller
 
 import (
-	controller "bgin/app/controller/api"
+	controller "github.com/meongbego/bgin/app/controller/api"
 
 	"github.com/gin-gonic/gin"
 )

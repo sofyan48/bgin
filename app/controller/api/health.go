@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"bgin/app/helper"
+	"github.com/meongbego/bgin/app/helper"
 )
 
 type HealthController struct{}

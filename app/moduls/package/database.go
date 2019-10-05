@@ -3,7 +3,7 @@ package moduls
 import (
 	"flag"
 	"fmt"
-	"bgin/app/libs"
+	"github.com/meongbego/bgin/app/libs"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"

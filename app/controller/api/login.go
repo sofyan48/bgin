@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"bgin/app/helper"
-	"bgin/app/models"
-	scheme "bgin/app/moduls/migration"
+	"github.com/meongbego/bgin/app/helper"
+	"github.com/meongbego/bgin/app/models"
+	scheme "github.com/meongbego/bgin/app/moduls/migration"
 
 	"github.com/gin-gonic/gin"
 )

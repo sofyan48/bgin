@@ -1,8 +1,8 @@
 package models
 
 import (
-	scheme "bgin/app/moduls/migration"
-	packages "bgin/app/moduls/package"
+	scheme "github.com/meongbego/bgin/app/moduls/migration"
+	packages "github.com/meongbego/bgin/app/moduls/package"
 )
 
 func GetAllLogin(b *[]scheme.LoginScheme) (err error) {

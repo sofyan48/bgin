@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"os"
 
-	"bgin/app/config"
-	scheme "bgin/app/moduls/migration"
-	packages "bgin/app/moduls/package"
-	"bgin/app/server"
+	"github.com/meongbego/bgin/app/config"
+	scheme "github.com/meongbego/bgin/app/moduls/migration"
+	packages "github.com/meongbego/bgin/app/moduls/package"
+	"github.com/meongbego/bgin/app/server"
 )
 
 func main() {
