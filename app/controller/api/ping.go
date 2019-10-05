@@ -9,6 +9,6 @@ import (
 type PingController struct{}
 
 func (p PingController) Status(c *gin.Context) {
-	helper.ResponseSuccess(c, 200, "I'm OK!")
+	helper.ResponseMsg(c, 200, "I'm OK!")
 	return
 }

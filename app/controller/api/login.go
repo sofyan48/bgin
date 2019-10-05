@@ -59,7 +59,7 @@ func (h LoginController) LoginUsers(c *gin.Context) {
 			response.Token = token
 			response.Username = logindata.Username
 			response.Expire = 3600
-			helper.ResponseSuccess(c, 200, response)
+			helper.ResponseData(c, 200, response)
 		} else {
 			helper.ResponseMsg(c, 404, "Username Or Password Wrong")
 		}
@@ -73,7 +73,7 @@ func (h LoginController) ListLogin(c *gin.Context) {
 	if err != nil {
 		helper.ResponseMsg(c, 404, logindata)
 	} else {
-		helper.ResponseSuccess(c, 200, logindata)
+		helper.ResponseData(c, 200, logindata)
 	}
 	return
 }

@@ -8,6 +8,6 @@ import (
 type HealthController struct{}
 
 func (h HealthController) Status(c *gin.Context) {
-	helper.ResponseSuccess(c, 200, "I'm OK!")
+	helper.ResponseMsg(c, 200, "I'm OK!")
 	return
 }
