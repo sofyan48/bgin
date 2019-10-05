@@ -1,8 +1,6 @@
 package server
 
 import (
-	"github.com/meongbego/bgin/app/middlewares"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,7 +9,6 @@ func Routes() *gin.Engine {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	router.Use(CORSMiddleware())
-	router.Use(middlewares.AuthACL())
 	return router
 }
 

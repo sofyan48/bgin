@@ -40,8 +40,8 @@ func (h LoginController) LoginUsers(c *gin.Context) {
 
 	type ResponseData struct {
 		Username string `json:"username"`
-		Token    string `json:"status"`
-		Expire   int    `json:expire`
+		Token    string `json:"token"`
+		Expire   int    `json:"expire"`
 	}
 
 	c.Bind(&data)
