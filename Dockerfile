@@ -1,14 +1,10 @@
 ## Builder
 FROM golang:latest
 
-RUN go get -u github.com/golang/dep/cmd/dep && \
-    mkdir -p /go/src/app
+RUN mkdir -p /app
 
-WORKDIR /go/src/app
+WORKDIR /app
 COPY    . .
-ENV  GOPATH=/go
-RUN     echo ${GOPATH} && \
-        dep ensure && \
-        dep ensure -add github.com/meongbego/go_boilerplate
+RUN     go build main.go
 
 EXPOSE 5000
