@@ -26,6 +26,13 @@ func GetOneLogin(b *scheme.LoginScheme, id string) (err error) {
 	return nil
 }
 
+func GetByUsername(b *scheme.LoginScheme, username string) (err error) {
+	if err := packages.Conn.Where("username = ?", username).First(b).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
 func EditLogin(b *scheme.LoginScheme, id string) (err error) {
 	packages.Conn.Save(b)
 	return nil
