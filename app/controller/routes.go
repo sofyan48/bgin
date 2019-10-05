@@ -7,21 +7,21 @@ import (
 )
 
 func RoutesController(r *gin.Engine) {
-	// Create Routes No Auth
+	// Get Controller
+	login := new(controller.LoginController)
+	ping := new(controller.PingController)
+	health := new(controller.HealthController)
+
+	// Create Routes No Auth Declare Here
 	routes := r.Group("api")
 	{
-		login := new(controller.LoginController)
 		routes.POST("/login", login.LoginUsers)
 	}
-	// Create Routes With Auth
+	// Create Routes With Auth Declare Here
 	r.Use(middlewares.AuthACL())
 	r.Use(middlewares.AuthToken())
 	api := r.Group("api")
 	{
-		ping := new(controller.PingController)
-		health := new(controller.HealthController)
-		login := new(controller.LoginController)
-
 		api.GET("/ping", ping.Status)
 		api.GET("/health", health.Status)
 		api.GET("/login/list", login.ListLogin)
