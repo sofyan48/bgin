@@ -6,10 +6,11 @@ import (
 	"os"
 	"strings"
 
+	"github.com/garyburd/redigo/redis"
 	"github.com/gin-gonic/gin"
 	"github.com/meongbego/bgin/app/helper"
 	"github.com/meongbego/bgin/app/libs"
-	redis "github.com/meongbego/bgin/app/moduls/package"
+	rd "github.com/meongbego/bgin/app/moduls/package"
 )
 
 func ChekcIPRange(w_ip []string, addr string) bool {
@@ -37,7 +38,7 @@ func CheckValidIP(c *gin.Context, ip string) {
 	} else {
 		check := ChekcIPRange(cidr, ip)
 		if check != true {
-			helper.ResponseMsg(c, 401, "Not Valid IP")
+			helper.ResponseMsg(c, 401, "Your not Authorize")
 			c.Abort()
 		} else {
 			c.Next()
@@ -55,8 +56,14 @@ func AuthACL() gin.HandlerFunc {
 func AuthToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.Request.Header["Access-Token"]
-		store := redis.Store
-		data := "DATA"
-		store.Do("SET", data, token)
+		_, err := redis.String(rd.Store.Do("GET", token))
+		if err == redis.ErrNil {
+			helper.ResponseMsg(c, 401, "Your not Authorize")
+			c.Abort()
+		} else if err != nil {
+			panic(fmt.Sprintf("Redis Error : %v", err))
+		} else {
+			c.Next()
+		}
 	}
 }
