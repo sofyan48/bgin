@@ -16,6 +16,7 @@ require (
 	github.com/mattn/go-isatty v0.0.9
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
 	github.com/modern-go/reflect2 v1.0.1
+	github.com/shirou/gopsutil v2.19.9+incompatible
 	github.com/ugorji/go v1.1.7
 	golang.org/x/sys v0.0.0-20191003212358-c178f38b412c
 	gopkg.in/go-playground/validator.v8 v8.18.2
