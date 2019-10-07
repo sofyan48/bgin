@@ -57,7 +57,6 @@ func AuthToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.Request.Header["Access-Token"]
 		_, err := redis.String(rd.Store.Do("GET", token[0]))
-		fmt.Println(token[0])
 		if err == redis.ErrNil {
 			helper.ResponseMsg(c, 401, "Your not Authorize")
 			c.Abort()
