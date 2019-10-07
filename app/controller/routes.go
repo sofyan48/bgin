@@ -24,6 +24,9 @@ func RoutesController(r *gin.Engine) {
 	{
 		api.GET("/ping", ping.Status)
 		api.GET("/health", health.Status)
+		api.GET("/health/cpu", health.StatusCpu)
+		api.GET("/health/mem", health.StatusMem)
+		api.GET("/health/disk", health.StatusDisk)
 		api.GET("/login/list", login.ListLogin)
 	}
 }

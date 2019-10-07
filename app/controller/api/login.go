@@ -5,12 +5,11 @@ import (
 
 	"github.com/garyburd/redigo/redis"
 	"github.com/meongbego/bgin/app/helper"
+	"github.com/meongbego/bgin/app/libs"
 	"github.com/meongbego/bgin/app/models"
 	scheme "github.com/meongbego/bgin/app/moduls/migration"
 
 	"encoding/json"
-	"math/rand"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	rd "github.com/meongbego/bgin/app/moduls/package"
@@ -21,19 +20,6 @@ type LoginController struct{}
 type Login struct {
 	Username string `form:"username" binding:"required"`
 	Password string `form:"password" binding:"required"`
-}
-
-var seededRand *rand.Rand = rand.New(
-	rand.NewSource(time.Now().UnixNano()))
-
-func StringWithCharset(length int) string {
-	b := make([]byte, length)
-	const charset = "abcdefghijklmnopqrstuvwxyz" +
-		"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-	for i := range b {
-		b[i] = charset[seededRand.Intn(len(charset))]
-	}
-	return string(b)
 }
 
 func (h LoginController) LoginUsers(c *gin.Context) {
@@ -53,7 +39,7 @@ func (h LoginController) LoginUsers(c *gin.Context) {
 		helper.ResponseMsg(c, 404, "Login Not Success")
 	} else {
 		if logindata.Password == data.Password {
-			token := StringWithCharset(100)
+			token := libs.StringWithCharset(100)
 			data, _ := json.Marshal(logindata)
 			_, err := redis.String(rd.Store.Do("SET", token, data))
 			fmt.Println(err)

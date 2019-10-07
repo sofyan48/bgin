@@ -9,7 +9,30 @@ import (
 type HealthController struct{}
 
 func (h HealthController) Status(c *gin.Context) {
-	libs.GetCPUHealth()
-	helper.ResponseMsg(c, 200, "I'm OK!")
+	type Respons struct {
+		Memory interface{} `json:"mem"`
+		Cpu    interface{} `json:"cpu"`
+		Disk   interface{} `json:"disk"`
+	}
+	var res Respons
+	res.Memory = libs.GetMemHealth()
+	res.Cpu = libs.GetCPU()
+	res.Disk = libs.GetDiskInfo()
+	helper.ResponseData(c, 200, res)
+	return
+}
+
+func (h HealthController) StatusCpu(c *gin.Context) {
+	helper.ResponseData(c, 200, libs.GetCPU())
+	return
+}
+
+func (h HealthController) StatusMem(c *gin.Context) {
+	helper.ResponseData(c, 200, libs.GetMemHealth())
+	return
+}
+
+func (h HealthController) StatusDisk(c *gin.Context) {
+	helper.ResponseData(c, 200, libs.GetDiskInfo())
 	return
 }
