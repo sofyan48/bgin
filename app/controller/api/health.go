@@ -21,3 +21,18 @@ func (h HealthController) Status(c *gin.Context) {
 	helper.ResponseData(c, 200, res)
 	return
 }
+
+func (h HealthController) StatusCpu(c *gin.Context) {
+	helper.ResponseData(c, 200, libs.GetCPU())
+	return
+}
+
+func (h HealthController) StatusMem(c *gin.Context) {
+	helper.ResponseData(c, 200, libs.GetMemHealth())
+	return
+}
+
+func (h HealthController) StatusDisk(c *gin.Context) {
+	helper.ResponseData(c, 200, libs.GetDiskInfo())
+	return
+}
