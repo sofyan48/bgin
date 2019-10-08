@@ -1,6 +1,7 @@
 package moduls
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/Shopify/sarama"
@@ -12,28 +13,36 @@ type KafkaProducer struct {
 	Producer sarama.SyncProducer
 }
 
-func GetKafkaConfig(username, password string) *sarama.Config {
+func InitKafka() {
+	_, err := sarama.NewSyncProducer([]string{":9092"}, GetKafkaConfig())
+	fmt.Println(err)
+	// if err != nil {
+	// 	logrus.Errorf("Unable to create kafka producer got error %v", err)
+	// 	return
+	// }
+	// defer func() {
+	// 	if err := producers.Close(); err != nil {
+	// 		logrus.Errorf("Unable to stop kafka producer: %v", err)
+	// 		return
+	// 	}
+	// }()
+}
+
+func GetKafkaConfig() *sarama.Config {
 	kafkaConfig := sarama.NewConfig()
 	kafkaConfig.Producer.Return.Successes = true
 	kafkaConfig.Net.WriteTimeout = 5 * time.Second
 	kafkaConfig.Producer.Retry.Max = 0
-
-	if username != "" {
-		kafkaConfig.Net.SASL.Enable = true
-		kafkaConfig.Net.SASL.User = username
-		kafkaConfig.Net.SASL.Password = password
-	}
 	return kafkaConfig
 }
 
 // SendMessage function to send message into kafka
-func (p *KafkaProducer) SendMessage(topic, msg string) error {
-
+func SendMessage(topic, msg string) error {
+	var p *KafkaProducer
 	kafkaMsg := &sarama.ProducerMessage{
 		Topic: topic,
 		Value: sarama.StringEncoder(msg),
 	}
-
 	partition, offset, err := p.Producer.SendMessage(kafkaMsg)
 	if err != nil {
 		logrus.Errorf("Send message error: %v", err)
