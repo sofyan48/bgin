@@ -3,6 +3,8 @@ module github.com/meongbego/bgin
 go 1.13
 
 require (
+	github.com/Shopify/sarama v1.23.1
+	github.com/bsm/sarama-cluster v2.1.15+incompatible
 	github.com/garyburd/redigo v1.6.0
 	github.com/gin-contrib/sse v0.1.0
 	github.com/gin-gonic/gin v1.4.0
