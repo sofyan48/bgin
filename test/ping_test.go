@@ -2,10 +2,11 @@ package test
 
 import (
 	"fmt"
-	"go_boilerplate/app/controller"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"./app/controller"
 
 	"github.com/gin-gonic/gin"
 	"github.com/magiconair/properties/assert"

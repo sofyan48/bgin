@@ -20,6 +20,7 @@ func main() {
 	}
 	flag.Parse()
 	config.Init(*enviroment)
+
 	// Setting moduls
 	packages.Conn = packages.InitDB()
 	scheme.MigrateScheme(packages.Conn)

@@ -19,10 +19,11 @@ func RoutesController(r *gin.Engine) {
 	}
 	// Create Routes With Auth Declare Here
 	r.Use(middlewares.AuthACL())
-	r.Use(middlewares.AuthToken())
+	// r.Use(middlewares.AuthToken())
 	api := r.Group("api")
 	{
-		api.GET("/ping", ping.Status)
+		api.GET("/ping", ping.Ping)
+		api.GET("/kafka", ping.KafkaTest)
 		api.GET("/health", health.Status)
 		api.GET("/health/cpu", health.StatusCpu)
 		api.GET("/health/mem", health.StatusMem)
