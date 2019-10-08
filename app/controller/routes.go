@@ -23,7 +23,6 @@ func RoutesController(r *gin.Engine) {
 	api := r.Group("api")
 	{
 		api.GET("/ping", ping.Ping)
-		api.GET("/kafka", ping.KafkaTest)
 		api.GET("/health", health.Status)
 		api.GET("/health/cpu", health.StatusCpu)
 		api.GET("/health/mem", health.StatusMem)
