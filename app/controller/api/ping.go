@@ -12,8 +12,3 @@ func (p PingController) Ping(c *gin.Context) {
 	helper.ResponseMsg(c, 200, "Pong !")
 	return
 }
-
-func (p PingController) KafkaTest(c *gin.Context) {
-	// kafka.SendMessage("", "")
-	return
-}
