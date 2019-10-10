@@ -26,7 +26,8 @@ func (p KafkaController) KafkaTest(c *gin.Context) {
 	kafka := &producer.KafkaProducer{
 		Producer: producers,
 	}
-	kafka.SendMessage("test_topic", "test")
-	helper.ResponseMsg(c, 200, "")
+
+	res, _ := kafka.SendMessage("test_topic", "test")
+	helper.ResponseMsg(c, 200, res)
 	return
 }
