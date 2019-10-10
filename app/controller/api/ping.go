@@ -1,9 +1,8 @@
 package controller
 
 import (
-	"github.com/meongbego/bgin/app/helper"
-
 	"github.com/gin-gonic/gin"
+	"github.com/meongbego/bgin/app/helper"
 )
 
 type PingController struct{}
