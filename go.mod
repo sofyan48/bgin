@@ -24,7 +24,7 @@ require (
 	github.com/shirou/gopsutil v2.19.9+incompatible
 	github.com/sirupsen/logrus v1.4.2
 	github.com/ugorji/go v1.1.7 // indirect
-	go.etcd.io/etcd v3.3.15+incompatible // indirect
+	go.etcd.io/etcd v3.3.16+incompatible
 	golang.org/x/sys v0.0.0-20191003212358-c178f38b412c // indirect
 	gopkg.in/jcmturner/goidentity.v3 v3.0.0 // indirect
 	gopkg.in/yaml.v2 v2.2.4 // indirect
