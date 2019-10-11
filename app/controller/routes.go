@@ -11,6 +11,7 @@ func RoutesController(r *gin.Engine) {
 	login := new(controller.LoginController)
 	ping := new(controller.PingController)
 	health := new(controller.HealthController)
+	kafka := new(controller.KafkaController)
 
 	// Create Routes No Auth Declare Here
 	routes := r.Group("api")
@@ -23,6 +24,7 @@ func RoutesController(r *gin.Engine) {
 	api := r.Group("api")
 	{
 		api.GET("/ping", ping.Ping)
+		api.GET("/kafka", kafka.KafkaTest)
 		api.GET("/health", health.Status)
 		api.GET("/health/cpu", health.StatusCpu)
 		api.GET("/health/mem", health.StatusMem)
