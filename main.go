@@ -25,6 +25,7 @@ func main() {
 	packages.Conn = packages.InitDB()
 	scheme.MigrateScheme(packages.Conn)
 	packages.Store = packages.InitRedis()
+	packages.Kafka = packages.Initkafka()
 	// Up server
 	server.Init()
 }

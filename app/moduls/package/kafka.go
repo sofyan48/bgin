@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/Shopify/sarama"
+	"github.com/meongbego/bgin/app/libs"
 	"github.com/sirupsen/logrus"
 )
 
@@ -19,15 +20,28 @@ type Respons struct {
 	Offset interface{} `json:"offset"`
 }
 
+// Kafka Config
+var Kafka sarama.SyncProducer
+
+// Initkafka Function
+func Initkafka() sarama.SyncProducer {
+	kafkaConfig := GetKafkaConfig()
+	producers, err := sarama.NewSyncProducer([]string{"localhost:9092"}, kafkaConfig)
+	if err != nil {
+		logrus.Errorf("Unable to create kafka producer got error %v", err)
+	}
+	return producers
+}
+
 // SendMessage function to send message into kafka
-func (p *KafkaProducer) SendMessage(topic, msg string) (Respons, error) {
+func SendMessage(p sarama.SyncProducer, topic string, msg string) (Respons, error) {
 	kafkaMsg := &sarama.ProducerMessage{
 		Topic: topic,
 		Value: sarama.StringEncoder(msg),
 	}
 	var res Respons
 
-	partition, offset, err := p.Producer.SendMessage(kafkaMsg)
+	partition, offset, err := p.SendMessage(kafkaMsg)
 	if err != nil {
 		logrus.Errorf("Send message error: %v", err)
 		return res, err
@@ -41,8 +55,8 @@ func (p *KafkaProducer) SendMessage(topic, msg string) (Respons, error) {
 
 // GetKafkaConfig Get Config From kafka
 func GetKafkaConfig() *sarama.Config {
-	username := ""
-	password := ""
+	username := libs.GetEnvVariabel("KAFKA_USERNAME", "")
+	password := libs.GetEnvVariabel("KAFKA_PASSWORD", "")
 	kafkaConfig := sarama.NewConfig()
 	kafkaConfig.Producer.Return.Successes = true
 	kafkaConfig.Net.WriteTimeout = 5 * time.Second
