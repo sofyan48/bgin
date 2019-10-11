@@ -25,8 +25,9 @@ var Kafka sarama.SyncProducer
 
 // Initkafka Function
 func Initkafka() sarama.SyncProducer {
+	host := libs.GetEnvVariabel("KAFKA_HOST_PORT", "localhost:9092")
 	kafkaConfig := GetKafkaConfig()
-	producers, err := sarama.NewSyncProducer([]string{"localhost:9092"}, kafkaConfig)
+	producers, err := sarama.NewSyncProducer([]string{host}, kafkaConfig)
 	if err != nil {
 		logrus.Errorf("Unable to create kafka producer got error %v", err)
 	}
