@@ -54,7 +54,6 @@ func (h LoginController) LoginUsers(c *gin.Context) {
 }
 
 func (h LoginController) ListLogin(c *gin.Context) {
-
 	value, rd_err := redis.String(rd.Store.Do("GET", "loginlist"))
 	if rd_err != nil {
 		var logindata []scheme.LoginScheme
