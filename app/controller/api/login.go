@@ -54,10 +54,10 @@ func (h LoginController) LoginUsers(c *gin.Context) {
 }
 
 func (h LoginController) ListLogin(c *gin.Context) {
-	var logindata []scheme.LoginScheme
+
 	value, rd_err := redis.String(rd.Store.Do("GET", "loginlist"))
 	if rd_err != nil {
-
+		var logindata []scheme.LoginScheme
 		err := models.GetAllLogin(&logindata)
 		if err != nil {
 			helper.ResponseMsg(c, 404, logindata)
@@ -67,12 +67,7 @@ func (h LoginController) ListLogin(c *gin.Context) {
 		redis.String(rd.Store.Do("EXPIRE", "loginlist", 1200))
 		helper.ResponseData(c, 200, logindata)
 	} else {
-		type Data struct {
-			Id       int    `json:"id"`
-			Username string `json:"username"`
-			Password string `json:"password"`
-		}
-		type RespData []Data
+		type RespData []scheme.LoginScheme
 		data := &RespData{}
 		err := json.Unmarshal([]byte(value), data)
 		if err != nil {
