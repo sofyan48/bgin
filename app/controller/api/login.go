@@ -1,8 +1,6 @@
 package controller
 
 import (
-	"fmt"
-
 	"github.com/garyburd/redigo/redis"
 	"github.com/meongbego/bgin/app/helper"
 	"github.com/meongbego/bgin/app/libs"
@@ -41,8 +39,7 @@ func (h LoginController) LoginUsers(c *gin.Context) {
 		if logindata.Password == data.Password {
 			token := libs.StringWithCharset(100)
 			data, _ := json.Marshal(logindata)
-			_, err := redis.String(rd.Store.Do("SET", token, data))
-			fmt.Println(err)
+			redis.String(rd.Store.Do("SET", token, data))
 			redis.String(rd.Store.Do("EXPIRE", token, 3600))
 			var response ResponseData
 			response.Token = token
@@ -58,11 +55,32 @@ func (h LoginController) LoginUsers(c *gin.Context) {
 
 func (h LoginController) ListLogin(c *gin.Context) {
 	var logindata []scheme.LoginScheme
-	err := models.GetAllLogin(&logindata)
-	if err != nil {
-		helper.ResponseMsg(c, 404, logindata)
-	} else {
+	value, rd_err := redis.String(rd.Store.Do("GET", "loginlist"))
+	if rd_err != nil {
+
+		err := models.GetAllLogin(&logindata)
+		if err != nil {
+			helper.ResponseMsg(c, 404, logindata)
+		}
+		data, _ := json.Marshal(logindata)
+		redis.String(rd.Store.Do("SET", "loginlist", data))
+		redis.String(rd.Store.Do("EXPIRE", "loginlist", 1200))
 		helper.ResponseData(c, 200, logindata)
+	} else {
+		type Data struct {
+			Id       int    `json:"id"`
+			Username string `json:"username"`
+			Password string `json:"password"`
+		}
+		type RespData []Data
+		data := &RespData{}
+		err := json.Unmarshal([]byte(value), data)
+		if err != nil {
+			helper.ResponseMsg(c, 404, err)
+		} else {
+			helper.ResponseData(c, 200, data)
+		}
 	}
+
 	return
 }
