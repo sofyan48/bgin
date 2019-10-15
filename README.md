@@ -3,12 +3,17 @@ Create Your Micro Service with Gin Golang
 
 ## TREE
 ```
+├── Dockerfile
+├── Gopkg.lock
+├── Gopkg.toml
+├── README.md
 ├── app
 │   ├── config
 │   │   └── config.go
 │   ├── controller
 │   │   ├── api
 │   │   │   ├── health.go
+│   │   │   ├── kafka.go
 │   │   │   ├── login.go
 │   │   │   └── ping.go
 │   │   └── routes.go
@@ -25,20 +30,18 @@ Create Your Micro Service with Gin Golang
 │   │   │   └── scheme.go
 │   │   └── package
 │   │       ├── database.go
+│   │       ├── etcd.go
+│   │       ├── kafka.go
 │   │       └── redis.go
 │   └── server
 │       ├── router.go
 │       └── server.go
-├── test
-│    └── ping_test.go
-├── Dockerfile
-├── Gopkg.lock
-├── Gopkg.toml
-├── README.md
 ├── docker-compose.yml
 ├── go.mod
 ├── go.sum
 ├── main.go
+└── test
+    └── ping_test.go
 ```
 
 ## HOW TO INSTALL 
