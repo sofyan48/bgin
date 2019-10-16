@@ -8,8 +8,13 @@ import (
 	"github.com/garyburd/redigo/redis"
 )
 
+// Store for redis
 var Store redis.Conn
 
+// Data type
+type Data struct{}
+
+// InitRedis func
 func InitRedis() redis.Conn {
 	rdhost := libs.GetEnvVariabel("REDIS_HOST", "localhost")
 	rdport := libs.GetEnvVariabel("REDIS_PORT", "6379")
@@ -19,4 +24,23 @@ func InitRedis() redis.Conn {
 		panic(fmt.Sprintf("failed to connect to database: %v", err))
 	}
 	return c
+}
+
+// RowsCached func
+func RowsCached(keys string, d []byte, ttl int) ([]byte, error) {
+	_, err := redis.String(Store.Do("SET", keys, d))
+	if err != nil {
+		return nil, err
+	}
+	redis.String(Store.Do("EXPIRE", keys, ttl))
+	return d, nil
+}
+
+// GetRowsCached func
+func GetRowsCached(keys string) (string, error) {
+	value, err := redis.String(Store.Do("GET", keys))
+	if err != nil {
+		return "", err
+	}
+	return value, nil
 }

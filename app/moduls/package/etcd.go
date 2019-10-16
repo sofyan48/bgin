@@ -7,6 +7,7 @@ import (
 	"go.etcd.io/etcd/client"
 )
 
+// Etcd to use all object client
 var Etcd client.KeysAPI
 
 // Initetcd Function

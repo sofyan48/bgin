@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"fmt"
+
 	"github.com/garyburd/redigo/redis"
 	"github.com/meongbego/bgin/app/helper"
 	"github.com/meongbego/bgin/app/libs"
@@ -53,17 +55,20 @@ func (h LoginController) LoginUsers(c *gin.Context) {
 	return
 }
 
+// ListLogin controller
 func (h LoginController) ListLogin(c *gin.Context) {
-	value, rd_err := redis.String(rd.Store.Do("GET", "loginlist"))
-	if rd_err != nil {
+	value, rderr := rd.GetRowsCached("loginlist")
+	if rderr != nil {
 		var logindata []scheme.LoginScheme
 		err := models.GetAllLogin(&logindata)
 		if err != nil {
-			helper.ResponseMsg(c, 404, logindata)
+			helper.ResponseMsg(c, 404, err)
 		}
 		data, _ := json.Marshal(logindata)
-		redis.String(rd.Store.Do("SET", "loginlist", data))
-		redis.String(rd.Store.Do("EXPIRE", "loginlist", 1200))
+		_, cerr := rd.RowsCached("loginlist", data, 120)
+		if cerr != nil {
+			fmt.Println("Not Cached")
+		}
 		helper.ResponseData(c, 200, logindata)
 	} else {
 		type RespData []scheme.LoginScheme

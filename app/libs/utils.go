@@ -49,7 +49,3 @@ func GetDiskInfo() RespData {
 	fmt.Println(RespData)
 	return RespData
 }
-
-func CachData() {
-
-}

@@ -6,6 +6,7 @@ import (
 	"github.com/meongbego/bgin/app/middlewares"
 )
 
+// RoutesController | Create Route Controller Rest API
 func RoutesController(r *gin.Engine) {
 	// Get Controller
 	login := new(controller.LoginController)
@@ -14,9 +15,9 @@ func RoutesController(r *gin.Engine) {
 	kafka := new(controller.KafkaController)
 
 	// Create Routes No Auth Declare Here
-	routes := r.Group("api")
+	auth := r.Group("api")
 	{
-		routes.POST("/login", login.LoginUsers)
+		auth.POST("/login", login.LoginUsers)
 	}
 	// Create Routes With Auth Declare Here
 	r.Use(middlewares.AuthACL())
