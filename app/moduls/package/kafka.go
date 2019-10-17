@@ -1,6 +1,7 @@
 package moduls
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/Shopify/sarama"
@@ -26,6 +27,7 @@ var Kafka sarama.SyncProducer
 // Initkafka Function
 func Initkafka() sarama.SyncProducer {
 	host := libs.GetEnvVariabel("KAFKA_HOST_PORT", "localhost:9092")
+	fmt.Println(host)
 	kafkaConfig := GetKafkaConfig()
 	producers, err := sarama.NewSyncProducer([]string{host}, kafkaConfig)
 	if err != nil {
