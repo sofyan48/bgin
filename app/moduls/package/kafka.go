@@ -17,7 +17,7 @@ type KafkaProducer struct {
 // Respons Data
 type Respons struct {
 	Topic  interface{} `json:"topic"`
-	Data   interface{} `json:"data"`
+	Task   interface{} `json:"task"`
 	Offset interface{} `json:"offset"`
 }
 
@@ -49,7 +49,7 @@ func SendMessage(p sarama.SyncProducer, topic string, msg string) (Respons, erro
 		logrus.Errorf("Send message error: %v", err)
 		return res, err
 	}
-	res.Data = msg
+	res.Task = msg
 	res.Offset = offset
 	res.Topic = topic
 	logrus.Infof("Send message success, Topic %v, Partition %v, Offset %d", topic, partition, offset)

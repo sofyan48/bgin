@@ -2,10 +2,10 @@ package controller
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/meongbego/bgin/app/helper"
+	"github.com/meongbego/bgin/app/libs"
 	packages "github.com/meongbego/bgin/app/moduls/package"
 )
 
@@ -20,15 +20,15 @@ type SenDFormat struct {
 
 // KafkaTest Function
 func (p KafkaController) KafkaTest(c *gin.Context) {
+	taskid := libs.StringWithCharset(20)
+	topic := "test_topic"
 	var sd SenDFormat
 	sd.Data = map[string]string{
-		"name":      "iank",
-		"ticket_id": "1112222221111",
+		"name": "iank",
 	}
-	sd.Taskid = "task_123"
+	sd.Taskid = topic + ":" + taskid
 	data, _ := json.Marshal(sd)
-	res, _ := packages.SendMessage(packages.Kafka, "test_topic", string(data))
-	fmt.Println(res)
+	res, _ := packages.SendMessage(packages.Kafka, topic, string(data))
 	helper.ResponseData(c, 200, res)
 	return
 }
