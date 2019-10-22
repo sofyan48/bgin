@@ -21,7 +21,7 @@ type Respons struct {
 	Offset interface{} `json:"offset"`
 }
 
-// Kafka Config
+// Kafka Connect to global
 var Kafka sarama.SyncProducer
 
 // Initkafka Function

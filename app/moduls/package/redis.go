@@ -4,11 +4,12 @@ import (
 	"fmt"
 
 	"github.com/meongbego/bgin/app/libs"
+	"github.com/sirupsen/logrus"
 
 	"github.com/garyburd/redigo/redis"
 )
 
-// Store for redis
+// Store for global connect to cache
 var Store redis.Conn
 
 // Data type
@@ -21,7 +22,7 @@ func InitRedis() redis.Conn {
 	c, err := redis.Dial("tcp", fmt.Sprintf(
 		"%s:%s", rdhost, rdport))
 	if err != nil {
-		panic(fmt.Sprintf("failed to connect to database: %v", err))
+		logrus.Errorf("failed to connect to database: %v", err)
 	}
 	return c
 }

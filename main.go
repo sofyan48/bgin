@@ -22,10 +22,14 @@ func main() {
 	config.Init(*enviroment)
 
 	// Setting moduls
+	// storing Connectvity to Conn global Variabel
 	packages.Conn = packages.InitDB()
+	// Initialize Migrating All Scheme
 	scheme.MigrateScheme(packages.Conn)
+	// storing Connectvity to Store globalConnVariabel
 	packages.Store = packages.InitRedis()
-	packages.Kafka = packages.Initkafka()
+	// storing Connectvity to Kafka global Variabel
+	// packages.Kafka = packages.Initkafka()
 	// Up server
 	server.Init()
 }

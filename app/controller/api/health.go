@@ -42,8 +42,6 @@ func (h HealthController) Status(c *gin.Context) {
 		}
 	}
 	return
-	helper.ResponseData(c, 200, res)
-	return
 }
 
 // StatusCpu Get CPU Stats in spesific
