@@ -1,3 +1,4 @@
 .env
 vendor
 Gopkg.lock
+cockroach-data

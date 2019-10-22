@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"fmt"
 	"net"
 	"os"
 	"strings"
@@ -11,28 +10,30 @@ import (
 	"github.com/meongbego/bgin/app/helper"
 	"github.com/meongbego/bgin/app/libs"
 	rd "github.com/meongbego/bgin/app/moduls/package"
+	"github.com/sirupsen/logrus"
 )
 
-func ChekcIPRange(w_ip []string, addr string) bool {
+// ChekcIPRange Check ACL Addr range for ip and subneting
+func ChekcIPRange(wip []string, addr string) bool {
 
-	for _, ip := range w_ip {
-		ip_fix := strings.ReplaceAll(ip, " ", "")
-		_, ipv4Net, err := net.ParseCIDR(ip_fix)
+	for _, ip := range wip {
+		ipfix := strings.ReplaceAll(ip, " ", "")
+		_, ipv4Net, err := net.ParseCIDR(ipfix)
 		if err != nil {
-			fmt.Println(err)
+			logrus.Infof("Ip Not Supported : %s", err)
 		}
 		if ipv4Net.Contains(net.ParseIP(addr)) {
 			return true
-			break
 		}
 	}
 	return false
 }
 
+// CheckValidIP Checking Valid IP
 func CheckValidIP(c *gin.Context, ip string) {
-	whitelist_addr := libs.GetEnvVariabel("ACL_ADDR", os.Getenv("ACL_ADDR"))
-	cidr := strings.Split(whitelist_addr, ",")
-
+	whitelistaddr := libs.GetEnvVariabel("ACL_ADDR", os.Getenv("ACL_ADDR"))
+	cidr := strings.Split(whitelistaddr, ",")
+	logrus.Infof("IP : %s", ip)
 	if ip == "::1" {
 		c.Next()
 	} else {
@@ -46,6 +47,7 @@ func CheckValidIP(c *gin.Context, ip string) {
 	}
 }
 
+// AuthACL Initial
 func AuthACL() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ip := c.ClientIP()
@@ -53,6 +55,7 @@ func AuthACL() gin.HandlerFunc {
 	}
 }
 
+// AuthToken Initial
 func AuthToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.Request.Header["Access-Token"]
@@ -61,7 +64,7 @@ func AuthToken() gin.HandlerFunc {
 			helper.ResponseMsg(c, 401, "Your not Authorize")
 			c.Abort()
 		} else if err != nil {
-			panic(fmt.Sprintf("Redis Error : %v", err))
+			logrus.Errorf("Redis Error : %v", err)
 		} else {
 			c.Next()
 		}

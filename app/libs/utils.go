@@ -1,7 +1,6 @@
 package libs
 
 import (
-	"fmt"
 	"math/rand"
 	"os"
 	"time"
@@ -46,10 +45,5 @@ func GetCPU() RespData {
 
 func GetDiskInfo() RespData {
 	RespData, _ := disk.Usage("/")
-	fmt.Println(RespData)
 	return RespData
-}
-
-func CachData() {
-
 }

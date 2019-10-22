@@ -1,6 +1,7 @@
 package moduls
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/Shopify/sarama"
@@ -16,16 +17,17 @@ type KafkaProducer struct {
 // Respons Data
 type Respons struct {
 	Topic  interface{} `json:"topic"`
-	Data   interface{} `json:"data"`
+	Task   interface{} `json:"task"`
 	Offset interface{} `json:"offset"`
 }
 
-// Kafka Config
+// Kafka Connect to global
 var Kafka sarama.SyncProducer
 
 // Initkafka Function
 func Initkafka() sarama.SyncProducer {
 	host := libs.GetEnvVariabel("KAFKA_HOST_PORT", "localhost:9092")
+	fmt.Println(host)
 	kafkaConfig := GetKafkaConfig()
 	producers, err := sarama.NewSyncProducer([]string{host}, kafkaConfig)
 	if err != nil {
@@ -47,7 +49,7 @@ func SendMessage(p sarama.SyncProducer, topic string, msg string) (Respons, erro
 		logrus.Errorf("Send message error: %v", err)
 		return res, err
 	}
-	res.Data = msg
+	res.Task = msg
 	res.Offset = offset
 	res.Topic = topic
 	logrus.Infof("Send message success, Topic %v, Partition %v, Offset %d", topic, partition, offset)

@@ -5,6 +5,7 @@ import (
 	moduls "github.com/meongbego/bgin/app/moduls/package"
 )
 
+// GetAllLogin Get All data from table loginscheme
 func GetAllLogin(b *[]scheme.LoginScheme) (err error) {
 	if err = moduls.Conn.Find(b).Error; err != nil {
 		return err
@@ -12,6 +13,7 @@ func GetAllLogin(b *[]scheme.LoginScheme) (err error) {
 	return nil
 }
 
+// AddNewLogin Save Data to table loginscheme
 func AddNewLogin(b *scheme.LoginScheme) (err error) {
 	if err = moduls.Conn.Create(b).Error; err != nil {
 		return err
@@ -19,6 +21,7 @@ func AddNewLogin(b *scheme.LoginScheme) (err error) {
 	return nil
 }
 
+// GetOneLogin Get One data from table loginscheme
 func GetOneLogin(b *scheme.LoginScheme, id string) (err error) {
 	if err := moduls.Conn.Where("id = ?", id).First(b).Error; err != nil {
 		return err

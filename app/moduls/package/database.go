@@ -10,8 +10,10 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
+// Conn For Global Connect
 var Conn *gorm.DB
 
+// InitDB Database Connection
 func InitDB() *gorm.DB {
 	dbhost := libs.GetEnvVariabel("DB_HOST", "127.0.0.1")
 	dbport := libs.GetEnvVariabel("DB_PORT", "26257")
