@@ -66,6 +66,32 @@ To run production
 go run main.go -e production or ./build -e production
 ```
 
+## ENVIRONMENT SETUP
+### LOCAL DEVELOPMENT ENV
+if using local development use .env file
+```
+cp .env.example .env
+```
+now setup your env
+### PRODUCTION
+if production mode environtment setup in os env, example in your terminal execute this script
+```
+export GIN_MODE=release
+export APP_PORT=5000
+export APP_HOST=0.0.0.0
+export DB_HOST=roach1
+export DB_PORT=26257
+export DB_NAME=bgin
+export DB_USER=root
+export DB_PASSWORD=
+export ACL_ADDR=172.19.0.0/24
+export REDIS_HOST=rdcaches
+export REDIS_PORT=6379
+export KAFKA_HOST_PORT=localhost:9092
+```
+if your production dockerizing see docker-compose.yml to export environtment
+
+
 ## PACKAGE
 Activate and deactivate available packages see on app/moduls/package, see the example on main.go
 ```
