@@ -10,6 +10,6 @@ type PingController struct{}
 
 // Ping Function Controller
 func (p PingController) Ping(c *gin.Context) {
-	helper.ResponseMsg(c, 200, "Pong !")
+	helper.ResponseMsg(c, 200, "Pong Pong!")
 	return
 }

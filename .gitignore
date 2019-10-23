@@ -3,3 +3,4 @@ vendor/
 main
 Gopkg.lock
 cockroach-data
+tmp
