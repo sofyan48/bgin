@@ -6,8 +6,6 @@ import (
 	"os"
 
 	"github.com/meongbego/bgin/app/config"
-	scheme "github.com/meongbego/bgin/app/moduls/migration"
-	packages "github.com/meongbego/bgin/app/moduls/package"
 	"github.com/meongbego/bgin/app/server"
 )
 
@@ -23,13 +21,15 @@ func main() {
 
 	// Setting moduls
 	// storing Connectvity to Conn global Variabel
-	packages.Conn = packages.InitDB()
+	// packages.Conn = packages.InitDB()
 	// Initialize Migrating All Scheme
-	scheme.MigrateScheme(packages.Conn)
+	// scheme.MigrateScheme(packages.Conn)
 	// storing Connectvity to Store globalConnVariabel
-	packages.Store = packages.InitRedis()
+	// packages.Store = packages.InitRedis()
 	// storing Connectvity to Kafka global Variabel
 	// packages.Kafka = packages.Initkafka()
+	// packages.ElConn = packages.InitElastic()
+
 	// Up server
 	server.Init()
 }

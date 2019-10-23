@@ -66,6 +66,32 @@ To run production
 go run main.go -e production or ./build -e production
 ```
 
+## ENVIRONMENT SETUP
+### LOCAL DEVELOPMENT ENV
+if using local development use .env file
+```
+cp .env.example .env
+```
+now setup your env
+### PRODUCTION
+if production mode environtment setup in os env, example in your terminal execute this script
+```
+export GIN_MODE=release
+export APP_PORT=5000
+export APP_HOST=0.0.0.0
+export DB_HOST=roach1
+export DB_PORT=26257
+export DB_NAME=bgin
+export DB_USER=root
+export DB_PASSWORD=
+export ACL_ADDR=172.19.0.0/24
+export REDIS_HOST=rdcaches
+export REDIS_PORT=6379
+export KAFKA_HOST_PORT=localhost:9092
+```
+if your production dockerizing see docker-compose.yml to export environtment
+
+
 ## PACKAGE
 Activate and deactivate available packages see on app/moduls/package, see the example on main.go
 ```
@@ -78,6 +104,12 @@ db.MigrateScheme(db.Conn)
 redis.Store = redis.Init()
 ```
 
+Package:
+1. kafka
+2. elasticsearch
+3. etcd
+4. database (cockroachdb)
+5. redis
 
 ## DATABASE SCHEME AN IMPORTED TABLE
 to create a database schema look at the app/moduls/migration/ folder then edit the schem.go file
@@ -125,6 +157,10 @@ app/models/
 see loginModels.go for examples
 
 
+## PRODUCTION MODE
+
+
+
 ## DEVELOPMENT MODE
 
 To activate Live Reload install air 
@@ -159,6 +195,73 @@ go to your project path
 air -c watcher.conf
 ```
 
+## DOCKERIZING
+if you dockerizing this project follow this step
+
+```
+docker build -t your_tagging .
+```
+
+then see docker-compose.yml edit file for your configuration and install docker-compose for execute this script
+
+```
+version: '3'
+services:
+  rdcaches:
+    image: redis
+    command: ["redis-server"]
+    ports:
+      - "6379:6379"
+
+  roach1:
+    image: cockroachdb/cockroach
+    command: start --insecure
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    volumes:
+      - ./cockroach-data/roach1:/cockroach/cockroach-data
+
+  roach2:
+    image: cockroachdb/cockroach
+    command: start --insecure --join=roach1
+    volumes:
+      - ./cockroach-data/roach2:/cockroach/cockroach-data
+    links:
+      - roach1
+  
+  bgin:
+    image: your_tagging
+    ports:
+      - "6968:5000"
+    environment:
+      - GIN_MODE=release
+      - APP_PORT=5000
+      - APP_HOST=0.0.0.0
+      - DB_HOST=roach1
+      - DB_PORT=26257
+      - DB_NAME=bgin
+      - DB_USER=root
+      - DB_PASSWORD=
+      - ACL_ADDR=172.19.0.0/24
+      - REDIS_HOST=rdcaches
+      - REDIS_PORT=6379
+    command: ./main -e production
+    links:
+      - roach1
+      - rdcaches
+```
+
+then start compose
+
+```
+docker-compose up
+```
+
+stop container
+```
+docker-compose stop; docker-compose rm -f
+```
 
 
 
