@@ -8,8 +8,11 @@ depend:
 build:
 	@go build -o bgin main.go
 
-run: devel
+run:
 	@go run main.go
+
+production:
+	@go run main.go -e production
 
 docker-stop:
 	@docker-compose down
