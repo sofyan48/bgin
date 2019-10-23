@@ -123,3 +123,42 @@ to create a models look at the app/models folder
 app/models/
 ```
 see loginModels.go for examples
+
+
+## DEVELOPMENT MODE
+
+To activate Live Reload install air 
+### on macOS
+
+```
+curl -fLo /usr/local/bin/air \
+    https://raw.githubusercontent.com/cosmtrek/air/master/bin/darwin/air
+chmod +x /usr/local/bin/air
+```
+
+### on Linux
+
+```
+curl -fLo /usr/local/bin/air \
+    https://raw.githubusercontent.com/cosmtrek/air/master/bin/linux/air
+chmod +x /usr/local/bin/air
+```
+
+### on Windows
+
+```
+curl -fLo ~/air.exe \
+    https://raw.githubusercontent.com/cosmtrek/air/master/bin/windows/air.exe
+```
+
+see watcher.conf setting watcher file for air config now
+
+### Starting
+go to your project path
+```
+air -c watcher.conf
+```
+
+
+
+
