@@ -67,12 +67,14 @@ go run main.go -e production or ./build -e production
 ```
 
 ## ENVIRONMENT SETUP
+
 ### LOCAL DEVELOPMENT ENV
 if using local development use .env file
 ```
 cp .env.example .env
 ```
 now setup your env
+
 ### PRODUCTION
 if production mode environtment setup in os env, example in your terminal execute this script
 ```
@@ -155,10 +157,6 @@ to create a models look at the app/models folder
 app/models/
 ```
 see loginModels.go for examples
-
-
-## PRODUCTION MODE
-
 
 
 ## DEVELOPMENT MODE
