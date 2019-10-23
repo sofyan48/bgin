@@ -13,6 +13,7 @@ func RoutesController(r *gin.Engine) {
 	ping := new(controller.PingController)
 	health := new(controller.HealthController)
 	kafka := new(controller.KafkaController)
+	elastic := new(controller.ElasticController)
 
 	// Create Routes No Auth Declare Here
 	auth := r.Group("api")
@@ -31,5 +32,6 @@ func RoutesController(r *gin.Engine) {
 		api.GET("/health/mem", health.StatusMem)
 		api.GET("/health/disk", health.StatusDisk)
 		api.GET("/login/list", login.ListLogin)
+		api.GET("/elastic", elastic.Elastic)
 	}
 }
